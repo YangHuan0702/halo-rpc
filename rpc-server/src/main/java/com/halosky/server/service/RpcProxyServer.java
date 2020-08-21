@@ -1,5 +1,8 @@
 package com.halosky.server.service;
 
+import com.halosky.common.entity.User;
+import com.halosky.common.service.UserService;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executor;
@@ -11,6 +14,9 @@ public class RpcProxyServer {
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
     public void publisher(int port) {
+
+        UserService service = new UserServiceImpl();
+
         ServerSocket serverSocket = null;
         try {
 
@@ -18,7 +24,7 @@ public class RpcProxyServer {
             while (true) {
                 Socket socket = serverSocket.accept();
                 // 每一个socket都交给一个processorHandler来处理
-                executorService.execute(new ProcessorHandler(socket));
+            //    executorService.execute(new ProcessorHandler(socket,service));
             }
 
         } catch (Exception e) {

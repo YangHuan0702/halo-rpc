@@ -1,8 +1,10 @@
-package com.halosky.common.service;
+package com.halosky.server.service;
 
 import com.halosky.common.entity.User;
 import com.halosky.common.service.UserService;
+import com.halosky.server.annotation.RpcService;
 
+@RpcService("com.halosky.common.service.UserService")
 public class UserServiceImpl implements UserService {
 
     public User getUser() {

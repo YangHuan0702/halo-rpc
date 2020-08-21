@@ -23,7 +23,6 @@ public class RemoteInvocationHandler implements InvocationHandler {
         rpcRequest.setFields(args);
 
         RpcConnectionTransport rpcConnectionTransport = new RpcConnectionTransport(ip,port);
-        rpcConnectionTransport.send(rpcRequest);
         return rpcConnectionTransport.send(rpcRequest);
     }
 }

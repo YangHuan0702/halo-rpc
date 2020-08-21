@@ -7,13 +7,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.Map;
 
 public class ProcessorHandler implements Runnable {
 
     private Socket socket;
 
-    public ProcessorHandler(Socket socket) {
+    private Map<String,Object> serviceHandler;
+
+    public ProcessorHandler(Socket socket,Map<String,Object> serviceHandler) {
         this.socket = socket;
+        this.serviceHandler = serviceHandler;
     }
 
     /**
@@ -55,6 +59,12 @@ public class ProcessorHandler implements Runnable {
      * @param r
      */
     private Object invoke(RpcRequest r) throws Exception {
+
+        Object service = serviceHandler.get(r.getClassName());
+        if(null == service){
+            throw new RuntimeException("service not found:"+r.getClassName());
+        }
+
         Object[] fields = r.getFields();
         Class<?>[] fieldsArray = null;
         if(null != fields && fields.length > 0){
@@ -65,7 +75,7 @@ public class ProcessorHandler implements Runnable {
         }
         Class clazz = Class.forName(r.getClassName());
         Method method = clazz.getMethod(r.getMethodName(), fieldsArray);
-        Object result = method.invoke(clazz.newInstance(), fields);
+        Object result = method.invoke(service, fields);
         return result;
     }
 
