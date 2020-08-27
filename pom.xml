@@ -12,6 +12,9 @@
         <module>rpc-server</module>
         <module>rpc-client</module>
         <module>rpc-common</module>
+        <module>rpc-nio</module>
+        <module>rpc-netty</module>
+        <module>rpc-zookeeper</module>
     </modules>
 
 

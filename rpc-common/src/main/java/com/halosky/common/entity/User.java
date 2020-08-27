@@ -34,6 +34,9 @@ public class User implements Serializable {
         this.age = age;
     }
 
+    public void test(){
+    }
+
     @Override
     public String toString() {
         return "User{" +
